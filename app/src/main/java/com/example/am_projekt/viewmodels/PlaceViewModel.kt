@@ -19,11 +19,22 @@ class PlaceViewModel(application: Application) : AndroidViewModel(application) {
     private val _allPlaces = MutableStateFlow<List<Place>>(emptyList())
     val allPlaces: StateFlow<List<Place>> = _allPlaces
 
+    private val _selectedPlace = MutableStateFlow<Place?>(null)
+    val selectedPlace: StateFlow<Place?> = _selectedPlace
+
     init {
         //### Pobieranie danych o miejscach ###//
         viewModelScope.launch(Dispatchers.IO) {
             placeDao.getAllPlaces().collect { places ->
                 _allPlaces.value = places
+            }
+        }
+    }
+
+    fun getPlaceById(id: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            placeDao.getPlaceById(id).collect {
+                _selectedPlace.value = it
             }
         }
     }
@@ -36,6 +47,15 @@ class PlaceViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 }
+
+//class PlViewModel(application: Application) : AndroidViewModel(application){
+//    private val placeDao: PlaceDao = AppDatabase.getDatabase(application).placeDao()
+//
+//    private val _PlaceItem: MutableStateFlow<Place>()
+//}
+
+
+
 
 
 //### Fabryka PlaceViewModel - taki troche konstruktor ###//

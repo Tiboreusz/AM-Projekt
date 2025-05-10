@@ -1,6 +1,7 @@
 package com.example.am_projekt.ui.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -10,6 +11,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -19,11 +21,14 @@ import androidx.navigation.NavController
 import com.example.am_projekt.model.Place
 import com.example.am_projekt.viewmodels.PlaceViewModel
 
+
+
+
 //### Tu nie ma co komentować za bardzo, po prostu jest tworzony widok ###//
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ViewPlacesScreen(viewModel: PlaceViewModel = viewModel(), navController: NavController) {
+fun ViewPlacesScreen(viewModel: PlaceViewModel = viewModel(), navController: NavController, onPlaceClick: (Int)->Unit) {
     //### Pobieranie miejsc z bazy ###//
     val places = viewModel.allPlaces.collectAsState(initial = emptyList())
 
@@ -45,7 +50,7 @@ fun ViewPlacesScreen(viewModel: PlaceViewModel = viewModel(), navController: Nav
                 } else {
                     LazyColumn {
                         items(places.value) { place: Place ->
-                            PlaceItem(place)
+                            PlaceItem(place, onClick = onPlaceClick)
                         }
                     }
                 }
@@ -55,11 +60,12 @@ fun ViewPlacesScreen(viewModel: PlaceViewModel = viewModel(), navController: Nav
 }
 
 @Composable
-fun PlaceItem(place: Place) {
+fun PlaceItem(place: Place, onClick: (Int)->Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 8.dp),
+            .padding(bottom = 8.dp)
+            .clickable { onClick(place.id) },
         elevation = CardDefaults.cardElevation(4.dp),
         colors = CardDefaults.cardColors(
             containerColor = Color(0xFFA8E6CF))

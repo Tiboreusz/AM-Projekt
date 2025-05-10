@@ -20,4 +20,8 @@ interface PlaceDao {
     //### Usuwanie z bazy ###//
     @Query("DELETE FROM places")
     suspend fun deleteAllPlaces()
+
+    @Query("SELECT * FROM places WHERE id = :id")
+    fun getPlaceById(id: Int): Flow<Place?>
+
 }

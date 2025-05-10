@@ -52,7 +52,12 @@ fun App(placeDao: PlaceDao) {
             AddPlaceScreen(onPlaceAdded = {navController.popBackStack()}, navController = navController)
         }
         composable("view_places") {
-            ViewPlacesScreen(navController = navController)
+            ViewPlacesScreen(navController = navController, onPlaceClick = {navController.navigate("view_places" + "/$it")})
+        }
+        composable("view_places/{placeId}"){
+            backStackEntry ->
+            val placeId = backStackEntry.arguments?.getString("placeId", "1")?.toIntOrNull() ?: 0
+            PlaceDetailScreen(navController = navController, placeId = placeId)
         }
 
     }
