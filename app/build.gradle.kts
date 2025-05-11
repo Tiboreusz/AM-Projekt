@@ -68,7 +68,7 @@ dependencies {
 //    implementation ("androidx.compose.foundation:foundation:1.3.0")
     debugImplementation("androidx.compose.ui:ui-tooling:1.6.0")
     implementation("androidx.compose.foundation:foundation:1.4.3")
-
+    implementation("io.coil-kt:coil-compose:2.2.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

@@ -13,11 +13,24 @@ import com.example.am_projekt.model.Place
 import com.example.am_projekt.viewmodels.PlaceViewModel
 import com.example.am_projekt.viewmodels.PlaceViewModelFactory
 import android.app.Application
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.items
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
 
 
 @Composable
@@ -33,6 +46,14 @@ fun AddPlaceScreen(
     var location by remember { mutableStateOf("") }
     var rating by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
+
+    var selectedPhotosUris by remember{ mutableStateOf<List<Uri>>(emptyList())}
+
+    val multiplePhotoPickerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickMultipleVisualMedia(),
+        onResult = {uris -> selectedPhotosUris = uris}
+    )
+
 
     Scaffold(
         topBar={AddPlaceTopBar(navController)},
@@ -82,6 +103,32 @@ fun AddPlaceScreen(
                     label = { Text("Opis") },
                     modifier = Modifier.fillMaxWidth()
                 )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Button(onClick = {
+                    multiplePhotoPickerLauncher.launch(
+                        PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                    )
+                }){
+                    Text("Pick multiple photo")
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+
+                LazyVerticalGrid(columns = GridCells.Fixed(3)) {
+                    items(selectedPhotosUris) { uri ->
+                        AsyncImage(
+                            model = uri,
+                            contentScale = ContentScale.FillWidth,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .padding(16.dp, 8.dp)
+                                .size(128.dp)
+                        )
+                    }
+                }
 
                 Spacer(modifier = Modifier.height(16.dp))
 
