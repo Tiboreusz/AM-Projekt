@@ -32,14 +32,77 @@ fun PlaceDetailScreen(
 
     val place by viewModel.selectedPlace.collectAsState()
 
-    if (place != null) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(text = place!!.name, style = MaterialTheme.typography.headlineMedium)
-            Text(text = "Location: ${place!!.location}")
-            Text(text = "Rating: ${place!!.rating}/10")
-            // Add more UI elements as needed
+    Scaffold(
+        topBar = {
+            PlaceDetailTopBar(
+                navController
+            )
+        },
+        content = { paddingValues ->
+                Column(modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+                    .background(Color(0xFFE6F9E6)))
+                {
+                    if (place != null) {
+                    Text(text = place!!.name, style = MaterialTheme.typography.headlineMedium)
+                    Text(text = "Location: ${place!!.location}")
+                    Text(text = "Rating: ${place!!.rating}/10")
+                    // Add more UI elements as needed
+
+            } else {
+                Text("Loading...", modifier = Modifier.padding(16.dp))
+            }}
+        })
         }
-    } else {
-        Text("Loading...", modifier = Modifier.padding(16.dp))
-    }
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun PlaceDetailTopBar(navController: NavController) {
+    TopAppBar(
+        title = {
+            Box(
+                modifier = Modifier.fillMaxWidth(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "Moje miejsca",
+                    style = MaterialTheme.typography.titleLarge,
+                    color = Color.White
+                )
+            }
+        },
+        navigationIcon = {
+            IconButton(onClick = { navController.popBackStack() }) {
+                Icon(
+                    painter = painterResource(id = com.example.am_projekt.R.drawable.back),
+                    contentDescription = "Wstecz",
+                    tint = Color.White,
+                    modifier = Modifier.size(32.dp)
+                )
+            }
+        },
+        actions = {
+            IconButton(onClick = {
+                navController.navigate("start") {
+                    popUpTo("start") { inclusive = true }
+                }
+            }) {
+                Icon(
+                    painter = painterResource(id = com.example.am_projekt.R.drawable.home),
+                    contentDescription = "Dodawanie Miejsca",
+                    tint = Color.White,
+                    modifier = Modifier.size(32.dp)
+                )
+            }
+        },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = Color(0xFFA8E6CF),
+            titleContentColor = Color.White,
+            navigationIconContentColor = Color.White,
+            actionIconContentColor = Color.White
+        ),
+        modifier = Modifier.fillMaxWidth()
+    )
 }
