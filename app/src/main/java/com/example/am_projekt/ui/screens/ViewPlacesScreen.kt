@@ -1,5 +1,7 @@
 package com.example.am_projekt.ui.screens
 
+import android.net.Uri
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -14,10 +16,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import coil.compose.rememberImagePainter
 import com.example.am_projekt.model.Place
 import com.example.am_projekt.viewmodels.PlaceViewModel
 
@@ -61,6 +65,11 @@ fun ViewPlacesScreen(viewModel: PlaceViewModel = viewModel(), navController: Nav
 
 @Composable
 fun PlaceItem(place: Place, onClick: (Int)->Unit) {
+    val previewUri = place.photoUri
+        ?.split(",")
+        ?.firstOrNull()
+        ?.takeIf { it.isNotBlank() }
+        ?.let { Uri.parse(it) }
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -70,6 +79,13 @@ fun PlaceItem(place: Place, onClick: (Int)->Unit) {
         colors = CardDefaults.cardColors(
             containerColor = Color(0xFFA8E6CF))
     ) {
+        Row(
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
         Column(
             modifier = Modifier
                 .padding(16.dp)
@@ -81,6 +97,17 @@ fun PlaceItem(place: Place, onClick: (Int)->Unit) {
             Text(text = "${place.rating}/10")
             //Spacer(modifier = Modifier.height(4.dp))
             //Text(text = "Opis: ${place.description}")
+        }
+            if (previewUri != null) {
+                Image(
+                    painter = rememberImagePainter(previewUri),
+                    contentDescription = "Preview Image",
+                    modifier = Modifier
+                        .size(80.dp)
+                        .padding(start = 8.dp),
+                    contentScale = ContentScale.Crop
+                )
+            }
         }
     }
 }

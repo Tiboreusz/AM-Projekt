@@ -140,7 +140,7 @@ fun AddPlaceScreen(
                             location = location,
                             rating = rating.toIntOrNull() ?: 0,
                             description = description,
-                            photoUri = "" // do dodania :)
+                            photoUri = selectedPhotosUris.joinToString(",") { it.toString() } // do dodania :)
                         )
                         viewModel.insertPlace(place)
                         onPlaceAdded()
