@@ -30,7 +30,7 @@ class PlaceViewModel(application: Application) : AndroidViewModel(application) {
             }
         }
     }
-
+        // ### Pobieranie danych o miejscu o odpowiednim indeksie ### //
     fun getPlaceById(id: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             placeDao.getPlaceById(id).collect {
@@ -46,6 +46,13 @@ class PlaceViewModel(application: Application) : AndroidViewModel(application) {
             placeDao.insertPlace(place)
         }
     }
+
+    fun deleteAllPlaces() {
+        viewModelScope.launch(Dispatchers.IO) {
+            placeDao.deleteAllPlaces()
+        }
+    }
+
 }
 
 //class PlViewModel(application: Application) : AndroidViewModel(application){

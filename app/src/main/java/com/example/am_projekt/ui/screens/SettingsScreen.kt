@@ -24,9 +24,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.foundation.clickable
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.am_projekt.viewmodels.PlaceViewModel
 
 @Composable
-fun SettingsScreen(navController: NavController) {
+fun SettingsScreen(navController: NavController, viewModel: PlaceViewModel = viewModel()) {
     Scaffold(
         topBar = { SettingsTopBar(navController = navController) }
     ) { innerPadding ->
@@ -74,6 +76,7 @@ fun SettingsScreen(navController: NavController) {
                 style = MaterialTheme.typography.bodyLarge.copy(color=Color.Black),
                 modifier = Modifier
                     .padding(vertical = 20.dp)
+                    .clickable { viewModel.deleteAllPlaces() }
             )
 
             Spacer(modifier = Modifier.height(25.dp))
