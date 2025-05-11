@@ -18,6 +18,7 @@ import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.lazy.LazyColumn
@@ -32,6 +33,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import coil.compose.rememberImagePainter
 
 
 @Composable
@@ -139,8 +141,8 @@ fun AddPlaceScreen(
 
                 LazyVerticalGrid(columns = GridCells.Fixed(3)) {
                     items(selectedPhotosUris) { uri ->
-                        AsyncImage(
-                            model = uri,
+                        Image(
+                            painter = rememberImagePainter(uri),
                             contentScale = ContentScale.FillWidth,
                             contentDescription = null,
                             modifier = Modifier
