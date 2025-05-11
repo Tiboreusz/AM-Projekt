@@ -13,6 +13,7 @@ import com.example.am_projekt.model.Place
 import com.example.am_projekt.viewmodels.PlaceViewModel
 import com.example.am_projekt.viewmodels.PlaceViewModelFactory
 import android.app.Application
+import android.content.Intent
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
@@ -49,10 +50,31 @@ fun AddPlaceScreen(
 
     var selectedPhotosUris by remember{ mutableStateOf<List<Uri>>(emptyList())}
 
+//    val multiplePhotoPickerLauncher = rememberLauncherForActivityResult(
+//        contract = ActivityResultContracts.PickMultipleVisualMedia(),
+//        onResult = {uris -> selectedPhotosUris = uris}
+//    )
+
+    val context = LocalContext.current
+
     val multiplePhotoPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickMultipleVisualMedia(),
-        onResult = {uris -> selectedPhotosUris = uris}
+        onResult = { uris ->
+            selectedPhotosUris = uris
+            uris.forEach { uri ->
+                try {
+                    context.contentResolver.takePersistableUriPermission(
+                        uri,
+                        Intent.FLAG_GRANT_READ_URI_PERMISSION
+                    )
+                } catch (e: SecurityException) {
+
+                }
+            }
+        }
     )
+
+
 
 
     Scaffold(
