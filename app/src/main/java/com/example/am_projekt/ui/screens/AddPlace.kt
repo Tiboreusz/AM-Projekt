@@ -50,10 +50,6 @@ fun AddPlaceScreen(
 
     var selectedPhotosUris by remember{ mutableStateOf<List<Uri>>(emptyList())}
 
-//    val multiplePhotoPickerLauncher = rememberLauncherForActivityResult(
-//        contract = ActivityResultContracts.PickMultipleVisualMedia(),
-//        onResult = {uris -> selectedPhotosUris = uris}
-//    )
 
     val context = LocalContext.current
 
@@ -128,7 +124,9 @@ fun AddPlaceScreen(
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                Button(onClick = {
+                //### Przycisk Launcher dodawanie zdjęć ###//
+
+                Button(modifier = Modifier.fillMaxWidth(), onClick = {
                     multiplePhotoPickerLauncher.launch(
                         PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
                     )

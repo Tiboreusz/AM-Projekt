@@ -33,6 +33,8 @@ fun PlaceDetailScreen(
     navController: NavController,
     placeId: Int
 ) {
+
+    // Pobieranie danych miejsca z bazy
     LaunchedEffect(placeId) {
         viewModel.getPlaceById(placeId)
     }
