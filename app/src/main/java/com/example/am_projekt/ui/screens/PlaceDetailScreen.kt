@@ -13,11 +13,18 @@ import com.example.am_projekt.model.Place
 import com.example.am_projekt.viewmodels.PlaceViewModel
 import com.example.am_projekt.viewmodels.PlaceViewModelFactory
 import android.app.Application
+import android.net.Uri
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavController
+import coil.compose.rememberImagePainter
 
 
 @Composable
@@ -32,6 +39,12 @@ fun PlaceDetailScreen(
 
     val place by viewModel.selectedPlace.collectAsState()
 
+    val previewUri = place?.photoUri
+        ?.split(",")
+        ?.firstOrNull()
+        ?.takeIf { it.isNotBlank() }
+        ?.let { Uri.parse(it) }
+
     Scaffold(
         topBar = {
             PlaceDetailTopBar(
@@ -42,13 +55,23 @@ fun PlaceDetailScreen(
                 Column(modifier = Modifier
                     .fillMaxSize()
                     .padding(paddingValues)
-                    .background(Color(0xFFE6F9E6)))
+                    .background(Color(0xFFE6F9E6)),
+                    horizontalAlignment = Alignment.CenterHorizontally)
                 {
                     if (place != null) {
                     Text(text = place!!.name, style = MaterialTheme.typography.headlineMedium)
-                    Text(text = "Location: ${place!!.location}")
-                    Text(text = "Rating: ${place!!.rating}/10")
-                    // Add more UI elements as needed
+                    Text(text = "${place!!.location}")
+                        Image(
+                            painter = rememberImagePainter(previewUri),
+                            contentDescription = "Preview Image",
+                            modifier = Modifier
+                                .fillMaxWidth(0.5f)
+                                .clip(RoundedCornerShape(32.dp))
+                        )
+
+                    Text(text = "Ocena: ${place!!.rating}/10")
+                    Text(text = "${place!!.description}")
+
 
             } else {
                 Text("Loading...", modifier = Modifier.padding(16.dp))
