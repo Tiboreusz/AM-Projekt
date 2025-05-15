@@ -3,6 +3,7 @@ package com.example.am_projekt.database
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import com.example.am_projekt.model.Place
 import kotlinx.coroutines.flow.Flow
 
@@ -20,6 +21,9 @@ interface PlaceDao {
     //### Usuwanie z bazy ###//
     @Query("DELETE FROM places")
     suspend fun deleteAllPlaces()
+
+    @Update
+    fun updatePlace(edditedPlace: Place)
 
     @Query("SELECT * FROM places WHERE id = :id")
     fun getPlaceById(id: Int): Flow<Place?>

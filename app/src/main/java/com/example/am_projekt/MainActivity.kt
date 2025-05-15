@@ -59,6 +59,11 @@ fun App(placeDao: PlaceDao) {
             val placeId = backStackEntry.arguments?.getString("placeId", "1")?.toIntOrNull() ?: 0
             PlaceDetailScreen(navController = navController, placeId = placeId)
         }
+        composable("view_places/{placeId}/edit"){
+                backStackEntry ->
+            val placeId = backStackEntry.arguments?.getString("placeId", "1")?.toIntOrNull() ?: 0
+            EditPlaceScreen(onPlaceEdited = {navController.popBackStack()}, navController = navController, placeId = placeId)
+        }
 
     }
 }

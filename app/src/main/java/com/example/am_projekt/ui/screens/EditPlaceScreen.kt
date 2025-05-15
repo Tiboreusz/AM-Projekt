@@ -1,4 +1,4 @@
-package com.example.am_projekt.screens
+package com.example.am_projekt.ui.screens
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
@@ -11,8 +11,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.am_projekt.model.Place
 import com.example.am_projekt.viewmodels.PlaceViewModel
-import com.example.am_projekt.viewmodels.PlaceViewModelFactory
-import android.app.Application
 import android.content.Intent
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -35,20 +33,36 @@ import coil.compose.rememberImagePainter
 
 
 @Composable
-fun AddPlaceScreen(
-    onPlaceAdded: () -> Unit,
-    viewModel: PlaceViewModel = viewModel(
-        factory = PlaceViewModelFactory(LocalContext.current.applicationContext as Application) //Tworzenie instancji PlaceViewModel
-    ),
-    navController: NavController
+fun EditPlaceScreen(
+    onPlaceEdited: () -> Unit,
+    viewModel: PlaceViewModel = viewModel(),
+    navController: NavController,
+    placeId: Int
 ) {
-    //### Zmienne na dane, które zostanąwprowadzone ###//
-    var name by remember { mutableStateOf("") }
-    var location by remember { mutableStateOf("") }
-    var rating by remember { mutableStateOf("") }
-    var description by remember { mutableStateOf("") }
 
-    var selectedPhotosUris by remember{ mutableStateOf<List<Uri>>(emptyList())}
+    LaunchedEffect(placeId) {
+        viewModel.getPlaceById(placeId)
+    }
+
+    val place by viewModel.selectedPlace.collectAsState()
+
+    if (place == null) {
+        // Pokazuje ładowania ekranu
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            CircularProgressIndicator()
+        }
+    } else {
+        //### Zmienne na dane, które zostanąwprowadzone ###//
+        var name by remember { mutableStateOf("${place!!.name}") }
+        var location by remember { mutableStateOf("${place!!.location}") }
+        var rating by remember { mutableStateOf("${place!!.rating}") }
+        var description by remember { mutableStateOf("${place!!.description}") }
+        var selectedPhotosUris by remember { mutableStateOf<List<Uri>>(emptyList()) }
+
+
 
 
     val context = LocalContext.current
@@ -74,7 +88,7 @@ fun AddPlaceScreen(
 
 
     Scaffold(
-        topBar={AddPlaceTopBar(navController)},
+        topBar= {EditPlaceTopBar(navController)},
         content = { PaddingValues ->
 
             Column(
@@ -84,43 +98,49 @@ fun AddPlaceScreen(
                     .background(Color(0xFFE6F9E6))
             ) {
                 //### Nazwa miejsca ###//
-                OutlinedTextField(
-                    value = name,
-                    onValueChange = { name = it },
-                    label = { Text("Nazwa miejsca") },
-                    modifier = Modifier.fillMaxWidth()
-                )
+                name.let {
+                    OutlinedTextField(
+                        value = it,
+                        onValueChange = { name = it },
+                        label = { Text("Nazwa miejsca") },
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
 
                 Spacer(modifier = Modifier.height(8.dp))
 
                 //### Lokalizacja ###//
-                OutlinedTextField(
-                    value = location,
-                    onValueChange = { location = it },
-                    label = { Text("Lokalizacja") },
-                    modifier = Modifier.fillMaxWidth()
-                )
+                location.let {
+                    OutlinedTextField(
+                        value = it,
+                        onValueChange = { location = it },
+                        label = { Text("Lokalizacja") },
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
 
                 Spacer(modifier = Modifier.height(8.dp))
 
                 //### Ocena 3##//
-                OutlinedTextField(
-                    value = rating,
+                rating.let{OutlinedTextField(
+                    value = it,
                     onValueChange = { rating = it },
                     label = { Text("Ocena (0-10)") },
                     modifier = Modifier.fillMaxWidth(),
                     keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
-                )
+                )}
 
                 Spacer(modifier = Modifier.height(8.dp))
 
                 //### Opis ###//
-                OutlinedTextField(
-                    value = description,
-                    onValueChange = { description = it },
-                    label = { Text("Opis") },
-                    modifier = Modifier.fillMaxWidth()
-                )
+                description.let {
+                    OutlinedTextField(
+                        value = it,
+                        onValueChange = { description = it },
+                        label = { Text("Opis") },
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
 
                 Spacer(modifier = Modifier.height(16.dp))
 
@@ -155,29 +175,30 @@ fun AddPlaceScreen(
                 //### Przycisk do zapisu ###//
                 Button(
                     onClick = {
-                        val place = Place(
+                        val eddited_place = Place(
+                            id = placeId,
                             name = name,
                             location = location,
                             rating = rating.toIntOrNull() ?: 0,
                             description = description,
                             photoUri = selectedPhotosUris.joinToString(",") { it.toString() } // do dodania :)
                         )
-                        viewModel.insertPlace(place)
-                        onPlaceAdded()
+                        viewModel.updatePlace(eddited_place)
+                        onPlaceEdited()
                     },
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text("Dodaj miejsce")
+                    Text("Edit place")
                 }
 
             }
         }
     )
-}
+}}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddPlaceTopBar(navController: NavController) {
+fun EditPlaceTopBar(navController: NavController) {
     TopAppBar(
         title = {
             Box(

@@ -40,6 +40,14 @@ class PlaceViewModel(application: Application) : AndroidViewModel(application) {
     }
 
 
+    fun updatePlace(edditedPlace: Place){
+        viewModelScope.launch(Dispatchers.IO) {
+            placeDao.updatePlace(edditedPlace)
+        }
+
+    }
+
+
     //### Dodawanie miejsca do bazy ###//
     fun insertPlace(place: Place) {
         viewModelScope.launch {
@@ -54,12 +62,6 @@ class PlaceViewModel(application: Application) : AndroidViewModel(application) {
     }
 
 }
-
-//class PlViewModel(application: Application) : AndroidViewModel(application){
-//    private val placeDao: PlaceDao = AppDatabase.getDatabase(application).placeDao()
-//
-//    private val _PlaceItem: MutableStateFlow<Place>()
-//}
 
 
 

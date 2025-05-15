@@ -48,7 +48,8 @@ fun PlaceDetailScreen(
     Scaffold(
         topBar = {
             PlaceDetailTopBar(
-                navController
+                navController,
+                placeId
             )
         },
         content = { paddingValues ->
@@ -82,7 +83,7 @@ fun PlaceDetailScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PlaceDetailTopBar(navController: NavController) {
+fun PlaceDetailTopBar(navController: NavController, placeId: Int) {
     TopAppBar(
         title = {
             Box(
@@ -106,7 +107,17 @@ fun PlaceDetailTopBar(navController: NavController) {
                 )
             }
         },
+
         actions = {
+            IconButton(onClick = { navController.navigate("view_places" + "/$placeId" + "/edit") }){
+                Icon(
+                    painter = painterResource(id = com.example.am_projekt.R.drawable.edit),
+                    contentDescription = "Edit place",
+                    tint = Color.White,
+                    modifier = Modifier.size(32.dp)
+                )
+            }
+
             IconButton(onClick = {
                 navController.navigate("start") {
                     popUpTo("start") { inclusive = true }
