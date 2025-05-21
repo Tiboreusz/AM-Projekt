@@ -60,7 +60,13 @@ fun EditPlaceScreen(
         var location by remember { mutableStateOf("${place!!.location}") }
         var rating by remember { mutableStateOf("${place!!.rating}") }
         var description by remember { mutableStateOf("${place!!.description}") }
-        var selectedPhotosUris by remember { mutableStateOf<List<Uri>>(emptyList()) }
+        var UriList = emptyList<Uri>()
+        if (place!!.photoUri !=null){
+        val UriList_str = place!!.photoUri!!.split(",")
+        UriList = UriList_str.map({Uri.parse(it)})
+        }
+
+        var selectedPhotosUris by remember { mutableStateOf<List<Uri>>(UriList) }
 
 
 
