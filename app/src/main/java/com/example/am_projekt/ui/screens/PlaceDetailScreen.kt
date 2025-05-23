@@ -14,15 +14,24 @@ import com.example.am_projekt.viewmodels.PlaceViewModel
 import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.pager.HorizontalPager
+
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.ContentScale
+
 
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.util.lerp
 
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
+
+import kotlin.math.absoluteValue
 
 
 @Composable
@@ -73,6 +82,45 @@ fun PlaceDetailScreen(
                     Text(text = "Ocena: ${place!!.rating}/10")
                     Text(text = "${place!!.description}")
 
+                        var UriList = emptyList<Uri>()
+                        if (place!!.photoUri !=null){
+                            val UriList_str = place!!.photoUri!!.split(",")
+                            UriList = UriList_str.map({Uri.parse(it)})
+                        }
+
+                        val pagerState = rememberPagerState(pageCount = {
+                            UriList.size
+                        })
+
+                        HorizontalPager(state = pagerState, contentPadding = PaddingValues(horizontal = 64.dp), pageSpacing = 16.dp) { page ->
+                            Card(
+                                Modifier
+                                    .size(300.dp)
+                                    .graphicsLayer
+                                    {
+                                        val pageOffset = (
+                                                (pagerState.currentPage - page) + pagerState
+                                                    .currentPageOffsetFraction
+                                                ).absoluteValue
+
+                                        val scale = lerp(
+                                            start = 0.85f,
+                                            stop = 1f,
+                                            fraction = 1f - pageOffset.coerceIn(0f, 1f)
+                                        )
+                                        scaleX = scale
+                                        scaleY = scale
+                                    }
+                            ) {
+                                Image(
+                                    painter = rememberImagePainter(UriList[page]),
+                                    contentScale = ContentScale.FillWidth,
+                                    contentDescription = "Photo",
+                                    modifier = Modifier.fillMaxWidth()
+                                )
+
+                            }
+                        }
 
             } else {
                 Text("Loading...", modifier = Modifier.padding(16.dp))
