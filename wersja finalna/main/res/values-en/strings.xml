@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Your Places</string>
+    <string name="MyPlacesText">Your Places</string>
+    <string name="AddPlace">Add Place</string>
+    <string name="Settings">Settings</string>
+    <string name="DarkMode">Dark Mode</string>
+    <string name="ClearData">Clear Data</string>
+    <string name="Language">Select Language</string>
+    <string name="PlaceName">Place Name</string>
+    <string name="Loc">Location</string>
+    <string name="EnterRating">Rating (0-10)</string>
+    <string name="Description">Description</string>
+    <string name="ChosePhotos">Add Photos</string>
+    <string name="Rating">Rating: </string>
+    <string name="Save">Save</string>
+    <string name="Edit">Edit</string>
+    <string name="Oogabooga"> </string>
+    <string name="Volume">Volume</string>
+    <string name="PL">Polish</string>
+    <string name="GB">English</string>
+    <string name="NoPlaces">No places to show...</string>
+</resources>
