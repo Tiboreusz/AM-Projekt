@@ -19,23 +19,23 @@ androidx.compose.ui:ui:1.6.0, androidx.compose.material3:material3:1.2.1, androi
 Finalna wersja aplikacji znajduje się w katalogu "wersja finalna". <br>
 
 **/wersja finalna**<br>
-|---**/main**<br>
-    |--AndroidManifest.xml      //plik manifestu<br>
-    |--**/res**<br>
-    |   |--**/drawable**      //ikony i obrazki<br>
-    |   |--**/mipmap**      //ikony launchera<br>
-    |   |--**/raw**      //audio i wideo<br>
-    |   |--**/values**      //zmienne string<br>
-    |   |--**/values-en**      //zmienne string po angielsku<br>
-    |   |--**/xml**<br>
-    |--**/java/com/example/am_projekt**<br>
-        |--**/data**     //plik datastoreutils.kt - obsługuje zapis ustawień i preferencji<br>
-        |--**/database**     //zawiera plik obsługujący bazę danych oraz DAO (framework room)<br>
-        |--**/model**      //zawiera model obiektu "Place"<br>
-        |--**/ui**<br>
-        |  |--**/screens**      //zawiera definicje UI dla wszystkich ekranów<br>
-        |  |--**/theme**      //zawiera pomocniczen wartości wykorzystywane do tworzenia UI<br>
-        |--**/utils**      //zawiera LocaleUtils.kt wykrozystywane do obsługi preferencji związanych z lokalizacją<br>
-        |--**/viewmodels**      //zawiera viewmodel dla miejsc<br>
-        |--MainActivity.kt      //główna aktywność<br>
-        |--Muzyczka.kt        //obsługa odtwarzania pliku audio w tle<br>
+|--**/main**<br>
+&emsp;|----AndroidManifest.xml   &emsp;&emsp;&emsp;   //_plik manifestu_<br>
+    &emsp;|----**/res**<br>
+    &emsp;|&emsp;&emsp;|----**/drawable** &emsp;&emsp;&emsp;     //_ikony i obrazki_<br>
+    &emsp;|&emsp;&emsp;|----**/mipmap**  &emsp;&emsp;&emsp;    //_ikony launchera_<br>
+    &emsp;|&emsp;&emsp;|----**/raw**   &emsp;&emsp;&emsp;   //_audio i wideo_<br>
+    &emsp;|&emsp;&emsp;|----**/values** &emsp;&emsp;&emsp;     //_zmienne string_<br>
+    &emsp;|&emsp;&emsp;|----**/values-en**    &emsp;&emsp;&emsp;  //_zmienne string po angielsku_<br>
+    &emsp;|&emsp;&emsp;|----**/xml**<br>
+    &emsp;|----**/java/com/example/am_projekt**<br>
+        &emsp;|----**/data**   &emsp;&emsp;&emsp;  //_plik datastoreutils.kt - obsługuje zapis ustawień i preferencji_<br>
+        &emsp;|----**/database**  &emsp;&emsp;&emsp;   //_zawiera plik obsługujący bazę danych oraz DAO (framework room)_<br>
+        &emsp;|----**/model**    &emsp;&emsp;&emsp;  //_zawiera model obiektu "Place"_<br>
+        &emsp;|----**/ui**<br>
+        &emsp;|&emsp;&emsp;|----**/screens** &emsp;&emsp;&emsp;     //_zawiera definicje UI dla wszystkich ekranów_<br>
+        &emsp;|&emsp;&emsp;|----**/theme**  &emsp;&emsp;&emsp;    //_zawiera pomocniczen wartości wykorzystywane do tworzenia UI_<br>
+        &emsp;|----**/utils**   &emsp;&emsp;&emsp;   //_zawiera LocaleUtils.kt wykrozystywane do obsługi preferencji związanych z lokalizacją_<br>
+        &emsp;|----**/viewmodels**   &emsp;&emsp;&emsp;   //_zawiera viewmodel dla miejsc_<br>
+        &emsp;|----MainActivity.kt   &emsp;&emsp;&emsp;   //_główna aktywność_<br>
+        &emsp;|----Muzyczka.kt     &emsp;&emsp;&emsp;   //_obsługa odtwarzania pliku audio w tle_<br>
