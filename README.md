@@ -19,6 +19,7 @@ androidx.compose.ui:ui:1.6.0, androidx.compose.material3:material3:1.2.1, androi
 Finalna wersja aplikacji znajduje się w katalogu "wersja finalna". <br>
 
 **/wersja finalna**<br>
+|--build.gradle.kts &emsp;&emsp;&emsp;//_dołączanie bibliotek, pluginów, wersji itp._<br>
 |--**/main**<br>
 &emsp;|----AndroidManifest.xml   &emsp;&emsp;&emsp;   //_plik manifestu_<br>
     &emsp;|----**/res**<br>
@@ -29,13 +30,13 @@ Finalna wersja aplikacji znajduje się w katalogu "wersja finalna". <br>
     &emsp;|&emsp;&emsp;|----**/values-en**    &emsp;&emsp;&emsp;  //_zmienne string po angielsku_<br>
     &emsp;|&emsp;&emsp;|----**/xml**<br>
     &emsp;|----**/java/com/example/am_projekt**<br>
-        &emsp;|----**/data**   &emsp;&emsp;&emsp;  //_plik datastoreutils.kt - obsługuje zapis ustawień i preferencji_<br>
-        &emsp;|----**/database**  &emsp;&emsp;&emsp;   //_zawiera plik obsługujący bazę danych oraz DAO (framework room)_<br>
-        &emsp;|----**/model**    &emsp;&emsp;&emsp;  //_zawiera model obiektu "Place"_<br>
-        &emsp;|----**/ui**<br>
-        &emsp;|&emsp;&emsp;|----**/screens** &emsp;&emsp;&emsp;     //_zawiera definicje UI dla wszystkich ekranów_<br>
-        &emsp;|&emsp;&emsp;|----**/theme**  &emsp;&emsp;&emsp;    //_zawiera pomocniczen wartości wykorzystywane do tworzenia UI_<br>
-        &emsp;|----**/utils**   &emsp;&emsp;&emsp;   //_zawiera LocaleUtils.kt wykrozystywane do obsługi preferencji związanych z lokalizacją_<br>
-        &emsp;|----**/viewmodels**   &emsp;&emsp;&emsp;   //_zawiera viewmodel dla miejsc_<br>
+          &emsp;|&emsp;&emsp;|----**/data**   &emsp;&emsp;&emsp;  //_plik datastoreutils.kt - obsługuje zapis ustawień i preferencji_<br>
+         &emsp;|&emsp;&emsp;|----**/database**  &emsp;&emsp;&emsp;   //_zawiera plik obsługujący bazę danych oraz DAO (framework room)_<br>
+         &emsp;|&emsp;&emsp;|----**/model**    &emsp;&emsp;&emsp;  //_zawiera model obiektu "Place"_<br>
+         &emsp;|&emsp;&emsp;|----**/ui**<br>
+         &emsp;|&emsp;&emsp;|&emsp;&emsp;|----**/screens** &emsp;&emsp;&emsp;     //_zawiera definicje UI dla wszystkich ekranów_<br>
+         &emsp;|&emsp;&emsp;|&emsp;&emsp;|----**/theme**  &emsp;&emsp;&emsp;    //_zawiera pomocniczen wartości wykorzystywane do tworzenia UI_<br>
+         &emsp;|&emsp;&emsp;|----**/utils**   &emsp;&emsp;&emsp;   //_zawiera LocaleUtils.kt wykrozystywane do obsługi preferencji związanych z lokalizacją_<br>
+         &emsp;|&emsp;&emsp;|----**/viewmodels**   &emsp;&emsp;&emsp;   //_zawiera viewmodel dla miejsc_<br>
         &emsp;|----MainActivity.kt   &emsp;&emsp;&emsp;   //_główna aktywność_<br>
         &emsp;|----Muzyczka.kt     &emsp;&emsp;&emsp;   //_obsługa odtwarzania pliku audio w tle_<br>
